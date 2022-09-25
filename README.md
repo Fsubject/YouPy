@@ -3,8 +3,8 @@ Version: 1.0 | By: Fsubject
 
 ## Requirements
 - Python3.x | Try to get the newest version, it's better
-- pytube
-- colorama
+- pytube | 'pip install pytube'
+- colorama | 'pip install colorama'
 
 ## How it works?
 - Transfer all downloaded files in the same folder
