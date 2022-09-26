@@ -6,6 +6,7 @@ import time
 import colorama
 from colorama import Fore
 import string
+import keyboard
 
 # Initialisation colorama / Colorama initialization
 colorama.init(autoreset=True)
@@ -34,13 +35,14 @@ welcome_msg = f"""{RED}
 functionality = f"""
 {WHITE}[{RED}1{WHITE}] Get YouTube video informations
 {WHITE}[{RED}2{WHITE}] Download YouTube video
+{WHITE}[{RED}3{WHITE}] Help
 """
 
 # Initialisation du programme / Program initialization
 def initialization():
     clear(welcome_msg)
 
-    check_modules(modules=["pytube","os","sys","time","colorama","string"])
+    check_modules(modules=["pytube","os","sys","time","colorama","string","keyboard"])
     wait(2)
     clear(welcome_msg)
 
@@ -59,11 +61,13 @@ def initialization():
             print(f"{WHITE}[{RED}WARNING{WHITE}] Please wait {RED}2 seconds {WHITE}.")
             clear(welcome_msg)
             print(functionality)
-        elif choice == "exit":
+        elif choice == "exit()":
             clear("")
             print(f"{WHITE}[{RED}WARNING{WHITE}] Closing...")
             wait(1)
             sys.exit()
+        elif choice == str(3) or choice == "help":
+            help_menu()
         else:
             print(f"{WHITE}[{RED}WARNING{WHITE}] Please enter a {RED}correct {WHITE}number.")
 
@@ -85,8 +89,9 @@ def get_vid_info():
     """
 
     print(info)
-    print(f"{WHITE}[{RED}WARNING{WHITE}] Please wait {RED}10 seconds {WHITE}.")
-    wait(10)
+    print(f'\n{WHITE}[{RED}WARNING{WHITE}] Enter "{RED}Y/y{WHITE} in the terminal.')
+
+    is_pressed("y")
     clear(welcome_msg)
     print(functionality)
 
@@ -114,11 +119,23 @@ def video_downloader():
     wait(2)
 
     clear(welcome_msg)
-    print(f"\n{WHITE}[{RED}WARNING{WHITE}] Please wait {RED}5 seconds {WHITE}.")
+    print(f'\n{WHITE}[{RED}WARNING{WHITE}] Enter "{RED}Y/y{WHITE} in the terminal.')
 
-    wait(5)
+    is_pressed("y")
     clear(welcome_msg)
     print(functionality)
+
+# Fonction d'aide / Help function
+def help_menu():
+    help_msg = f"""
+{RED}[ {WHITE}Help menu: {RED}]
+{RED}--------------
+{RED}[{WHITE}1{RED}] {WHITE}"{RED}reprint{WHITE}", this command reprint the home menu.
+{RED}[{WHITE}2{RED}] {WHITE}"{RED}exit(){WHITE}", this command exit the program correctly (it's better than just doing {RED}CTRL+C {WHITE}or {RED}ALT+F4{WHITE}).
+{RED}[{WHITE}3{RED}] {WHITE}"{RED}help{WHITE}", this command print the help screen.
+    """
+
+    print(help_msg)
 
 # Fonction d'attente / Waiting function
 def wait(timer: float) -> float:
@@ -144,5 +161,14 @@ def check_modules(modules: list) -> list:
             wait(0.3)
             print(f"{WHITE}[{RED}ERROR{WHITE}] " + string.capwords(i) + " module cannot been initialized.")
             sys.exit()
+
+# Attend la préssion d'un touche / Wait a pressed key
+def is_pressed(hotkey: string) -> string:
+    while True:
+        try:
+            if keyboard.is_pressed(hotkey=hotkey):
+                break
+        except:
+            break
 
 initialization()
